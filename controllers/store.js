@@ -27,14 +27,6 @@ function appendlist(todo){
     })
 };
 
-router.get('/store', (req, res, next) => {
-    res.sendFile(path.join(__dirname, '../', 'views', 'store.html'));
-});
-
-router.post('/store', (req, res, next) => {
-    appendlist(req.body)
-    res.json('store successful')    
-})
 
 
 module.exports = router;

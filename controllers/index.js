@@ -17,10 +17,5 @@ function index(){
     return todolist
 };
 
-router.get('/index', (req, res, next) => {
-    var worklist = index()
-    res.render(path.join(__dirname, '../', 'views', 'index.html'), {name: worklist});
-});
-
 
 module.exports = router;
