@@ -1,6 +1,7 @@
 const Database = require('../database');
 const statuscontroller = require('./helpers');
 
+
 class ToDoListController {    
      constructor() { 
             this.db = new Database('./todo')
@@ -8,16 +9,20 @@ class ToDoListController {
     }
 
      store(req, res){
-        this.db.run(`insert into worklist (name,date) values ('${req.body.name}', '${req.body.date}');`)
+        this.db.run("insert into worklist (name,date) values ($name, $date);",
+                     {$name: req.body.name, $date: req.body.date}
+                     )
             .then(this.statuscontroller.success(res))
             .catch(this.statuscontroller.notFindError(res));
      }
 
      done(req, res){
-        this.db.run(`UPDATE worklist SET status = true WHERE id= '${req.param.id}';`)
+        console.log(req.params.id)
+        this.db.run("UPDATE worklist SET status = $status WHERE id= $id;", 
+                     {$status:true, $id: req.params.id}
+                  )
         .then(this.statuscontroller.success(res))
         .catch(this.statuscontroller.notFindError(res));
-        console.log('change status to done')
    }
 
        index(res){
